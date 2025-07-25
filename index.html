@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login WiFi</title>
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --secondary-color: #10b981;
+            --dark-color: #1e293b;
+            --light-color: #f8fafc;
+            --error-color: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e0e7ff, #d1fae5);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark-color);
+        }
+
+        .login-container {
+            background-color: white;
+            width: 90%;
+            max-width: 400px;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header img {
+            width: 80px;
+            margin-bottom: 1rem;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 0.9375rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .form-group i {
+            position: absolute;
+            right: 1rem;
+            top: 2.4rem;
+            color: #94a3b8;
+            cursor: pointer;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+        }
+
+        .remember-me input {
+            margin-right: 0.5rem;
+        }
+
+        .forgot-password a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.875rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        button:hover {
+            background-color: #4338ca;
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 0.8125rem;
+            color: #64748b;
+        }
+
+        .footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.8125rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 1.5rem;
+            }
+            
+            .header h1 {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-container {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        /* Password toggle */
+        #togglePassword {
+            font-style: normal;
+            font-family: 'Material Icons';
+            user-select: none;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="login-container">
+        <div class="header">
+            <img src="https://placehold.co/100x100?text=WiFi&font=roboto" alt="Logo WiFi berupa sinyal gelombang warna biru dengan tulisan WiFi di bawahnya" />
+            <h1>Masuk ke Jaringan WiFi</h1>
+            <p>Silakan masukkan username dan password Anda</p>
+        </div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Masukkan username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Masukkan password" required>
+                <i class="material-icons" id="togglePassword">visibility</i>
+                <div class="error-message" id="passwordError">Password yang Anda masukkan salah</div>
+            </div>
+
+            <div class="remember-forgot">
+                <div class="remember-me">
+                    <input type="checkbox" id="rememberMe">
+                    <label for="rememberMe">Ingat saya</label>
+                </div>
+                <div class="forgot-password">
+                    <a href="#">Lupa password?</a>
+                </div>
+            </div>
+
+            <button type="submit">Masuk</button>
+        </form>
+
+        <div class="footer">
+            Tidak punya akun? <a href="#">Hubungi administrator</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('password');
+            const togglePassword = document.getElementById('togglePassword');
+            const loginForm = document.getElementById('loginForm');
+            const passwordError = document.getElementById('passwordError');
+
+            // Toggle password visibility
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.textContent = type === 'password' ? 'visibility' : 'visibility_off';
+            });
+
+            // Form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const rememberMe = document.getElementById('rememberMe').checked;
+                
+                // Validasi sederhana (biasanya ini diganti dengan request ke server)
+                if (password.length < 8) {
+                    passwordError.textContent = 'Password harus minimal 8 karakter';
+                    passwordError.style.display = 'block';
+                } else {
+                    passwordError.style.display = 'none';
+                    
+                    // Simulasi proses login
+                    console.log('Login attempted with:', { username, password, rememberMe });
+                    
+                    // Di sini biasanya ada fetch/axios request ke API
+                    // Untuk demo, kita tampilkan alert saja
+                    setTimeout(() => {
+                        alert('Login berhasil! Selamat datang di jaringan WiFi kami.');
+                        
+                        // Redirect ke halaman setelah login
+                        // window.location.href = 'dashboard.html';
+                    }, 1000);
+                }
+            });
+
+            // Animasi input saat focus
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.style.transform = 'scale(1.01)';
+                });
+                
+                input.addEventListener('blur', () => {
+                    input.parentElement.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html
